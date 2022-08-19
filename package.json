@@ -1,7 +1,7 @@
 {
   "name": "koha-plugin-entry-page-link-checker",
-  "version": "0.0.3",
-  "previous_version": "0.0.2",
+  "version": "0.0.4",
+  "previous_version": "0.0.3",
   "description": "This plugin is used to check embedded searchengine queries on entry pages for valid results.",
   "devDependencies": {
     "eslint": "^8.20.0",

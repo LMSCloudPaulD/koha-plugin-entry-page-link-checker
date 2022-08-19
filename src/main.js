@@ -17,9 +17,13 @@ export function testQueries() {
       };
 
       const response = fetch(`/api/v1/public/biblios?q_ccl=${decodedQuery}`, options);
-      response.then((result) => {
-        console.log(result.json());
-      });
+      response
+        .then((result) => {
+          console.log(result.json());
+        })
+        .catch((result) => {
+          console.error(result);
+        });
     }
   });
 }
