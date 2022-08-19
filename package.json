@@ -1,0 +1,35 @@
+{
+  "name": "koha-plugin-entry-page-link-checker",
+  "version": "0.0.3",
+  "previous_version": "0.0.2",
+  "description": "This plugin is used to check embedded searchengine queries on entry pages for valid results.",
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^1.2.2",
+    "gulp-github-release": "^1.1.5",
+    "gulp-run": "^1.7.1",
+    "rollup": "^2.77.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ldjamison/koha-plugin-room-reservations.git"
+  },
+  "author": "Lee Jamison <ldjamison@marywood.edu>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ldjamison/koha-plugin-room-reservations/issues"
+  },
+  "homepage": "https://github.com/ldjamison/koha-plugin-room-reservations#readme",
+  "dependencies": {
+    "datetime": "0.0.3",
+    "gulp-replace": "^0.6.1",
+    "jsonfile": "^4.0.0",
+    "node-datetime": "^2.0.0"
+  }
+}

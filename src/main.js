@@ -1,0 +1,25 @@
+export function testQueries() {
+  const { links } = document;
+
+  Array.from(links).forEach((link) => {
+    // console.log(`link: ${link}, type: ${typeof link}`);
+    if (link.href.includes('opac-search.pl?q=')) {
+      const [, query] = link.href.split('?q=');
+      const decodedQuery = window.decodeURIComponent(query);
+
+      const headers = new Headers({
+        Accept: 'application/marc-in-json',
+      });
+
+      const options = {
+        method: 'GET',
+        headers,
+      };
+
+      const response = fetch(`/api/v1/public/biblios?q_ccl=${decodedQuery}`, options);
+      response.then((result) => {
+        console.log(result.json());
+      });
+    }
+  });
+}
