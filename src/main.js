@@ -1,6 +1,8 @@
-export function testQueries() {
+export async function testQueries() {
   const { links } = document;
 
+  const linkTags = [];
+  const linkRequests = [];
   Array.from(links).forEach((link) => {
     // console.log(`link: ${link}, type: ${typeof link}`);
     if (link.href.includes('opac-search.pl?q=')) {
@@ -16,14 +18,24 @@ export function testQueries() {
         headers,
       };
 
-      const response = fetch(`/api/v1/public/biblios?q_ccl=${decodedQuery}`, options);
-      response
-        .then((result) => {
-          console.log(result.json());
-        })
-        .catch((result) => {
-          console.error(result);
-        });
+      linkTags.push(link);
+      linkRequests.push(fetch(`/api/v1/public/biblios?q_ccl=${decodedQuery}`, options));
     }
   });
+
+  const linkResults = await Promise.allSettled(linkRequests);
+  const linkResultsValues = linkResults.map((linkResult) => linkResult.value);
+  const linkData = linkResultsValues
+    .map((result, idx) => ({
+      tag: linkTags[idx],
+      status: result.status,
+      url: result.url,
+      response: result.json(),
+    }));
+
+  console.table(linkData);
+}
+
+export function test() {
+
 }

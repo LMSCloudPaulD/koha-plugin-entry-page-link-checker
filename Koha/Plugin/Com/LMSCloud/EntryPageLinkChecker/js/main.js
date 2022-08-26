@@ -4,9 +4,11 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.EntryPageLinkCheckerBundle = {}));
 })(this, (function (exports) { 'use strict';
 
-  function testQueries() {
+  async function testQueries() {
     const { links } = document;
 
+    const linkTags = [];
+    const linkRequests = [];
     Array.from(links).forEach((link) => {
       // console.log(`link: ${link}, type: ${typeof link}`);
       if (link.href.includes('opac-search.pl?q=')) {
@@ -22,18 +24,29 @@
           headers,
         };
 
-        const response = fetch(`/api/v1/public/biblios?q_ccl=${decodedQuery}`, options);
-        response
-          .then((result) => {
-            console.log(result.json());
-          })
-          .catch((result) => {
-            console.error(result);
-          });
+        linkTags.push(link);
+        linkRequests.push(fetch(`/api/v1/public/biblios?q_ccl=${decodedQuery}`, options));
       }
     });
+
+    const linkResults = await Promise.allSettled(linkRequests);
+    const linkResultsValues = linkResults.map((linkResult) => linkResult.value);
+    const linkData = linkResultsValues
+      .map(async (result, idx) => ({
+        tag: linkTags[idx],
+        status: result.status,
+        url: result.url,
+        response: await result.json(),
+      }));
+
+    console.table(linkData);
   }
 
+  function test() {
+
+  }
+
+  exports.test = test;
   exports.testQueries = testQueries;
 
   Object.defineProperty(exports, '__esModule', { value: true });
